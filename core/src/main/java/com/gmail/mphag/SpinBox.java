@@ -17,8 +17,8 @@ public class SpinBox {
 
     }
 
-    public void update() {
-
+    public void update(float speed) {
+        this.gridPoint2.x -= speed;
     }
 
 }
