@@ -10,6 +10,8 @@ import java.util.Random;
 
 public class SpinManager {
 
+    private final PlayerManager playerManager;
+
     private final Random random = new Random();
 
     private float spinTime;
@@ -29,7 +31,8 @@ public class SpinManager {
 
     private SpinBox chosenSpinBox;
 
-    public SpinManager() {
+    public SpinManager(PlayerManager playerManager) {
+        this.playerManager = playerManager;
         load();
         resetVariables();
         this.hasSpun = false;
@@ -104,7 +107,9 @@ public class SpinManager {
         for (SpinBox spinBox : spinBoxes) {
             if(spinBox.getLocation().x <= Settings.GAME_WIDTH/2 && spinBox.getLocation().x + boxWidth >= Settings.GAME_WIDTH/2) {
                 chosenSpinBox = spinBox;
-                System.out.println("Done break");
+
+                playerManager.getCurrentPlayer().setCurrentSpinType(spinBox.getType());
+
                 break;
             }
             chosenSpinBox = null;

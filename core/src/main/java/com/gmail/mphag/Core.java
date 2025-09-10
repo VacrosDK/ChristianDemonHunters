@@ -20,14 +20,17 @@ public class Core extends ApplicationAdapter {
     private TurnManager turnManager;
     private SpinManager spinManager;
 
+    private PlayerManager playerManager;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
+        playerManager = new PlayerManager();
         boardManager = new BoardManager();
         turnManager = new TurnManager();
-        spinManager = new SpinManager();
+        spinManager = new SpinManager(playerManager);
 
         GAME_STATE = GameState.WAITING_FOR_ROLL;
     }

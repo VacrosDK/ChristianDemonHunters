@@ -32,4 +32,8 @@ public class SpinBox {
     public boolean shouldRemove() {
         return gridPoint2.x + width <= 0;
     }
+
+    public SpinType getType() {
+        return type;
+    }
 }
