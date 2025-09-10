@@ -18,7 +18,6 @@ public enum SpinType {
     private final String texturePath;
     private Texture texture;
 
-
     SpinType(int spinNumber, String info, String texturePath) {
         this.info = info;
         this.spinNumber = spinNumber;
@@ -37,5 +36,9 @@ public enum SpinType {
 
     public int getSpinNumber() {
         return spinNumber;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 }
