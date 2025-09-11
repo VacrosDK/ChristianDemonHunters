@@ -1,13 +1,17 @@
 package com.gmail.mphag;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class PlayerManager {
 
     private final Player player1;
     private final Player player2;
 
+    private final String spinText = "Click anywhere to spin!";
+
     public PlayerManager() {
-        this.player1 = new Player(true);
-        this.player2 = new Player(false);
+        this.player1 = new Player(true, Settings.GAME_HEIGHT - Settings.GAME_HEIGHT/4, "playerOneUI.fnt");
+        this.player2 = new Player(false, Settings.GAME_HEIGHT/4, "playerTwoUI.fnt");
     }
 
     public void switchTurn() {
@@ -19,6 +23,12 @@ public class PlayerManager {
             player1.setTurn(true);
         }
 
+    }
+
+    public void draw(SpriteBatch batch) {
+        if(Core.GAME_STATE == GameState.WAITING_FOR_ROLL) {
+            Utils.drawStringCentered(getCurrentPlayer().getFont(), batch, spinText, Settings.GAME_WIDTH/2, getCurrentPlayer().getUiTextY());
+        }
     }
 
     public Player getCurrentPlayer() {

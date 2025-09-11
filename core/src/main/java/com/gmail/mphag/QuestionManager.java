@@ -24,7 +24,7 @@ public class QuestionManager {
     }
 
 
+    public void askQuestion() {
 
-
-
+    }
 }

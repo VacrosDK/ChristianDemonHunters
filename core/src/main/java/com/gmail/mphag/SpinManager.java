@@ -11,6 +11,7 @@ import java.util.Random;
 public class SpinManager {
 
     private final PlayerManager playerManager;
+    private final ActionManager actionManager;
 
     private final Random random = new Random();
 
@@ -31,8 +32,9 @@ public class SpinManager {
 
     private SpinBox chosenSpinBox;
 
-    public SpinManager(PlayerManager playerManager) {
+    public SpinManager(PlayerManager playerManager, ActionManager actionManager) {
         this.playerManager = playerManager;
+        this.actionManager = actionManager;
         load();
         resetVariables();
         this.hasSpun = false;
@@ -109,6 +111,7 @@ public class SpinManager {
                 chosenSpinBox = spinBox;
 
                 playerManager.getCurrentPlayer().setCurrentSpinType(spinBox.getType());
+                actionManager.executeAction();
 
                 break;
             }

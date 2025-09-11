@@ -17,20 +17,24 @@ public class Core extends ApplicationAdapter {
     private ShapeRenderer shapeRenderer;
 
     private BoardManager boardManager;
-    private TurnManager turnManager;
     private SpinManager spinManager;
+    private ActionManager actionManager;
+    private QuestionManager questionManager;
 
     private PlayerManager playerManager;
 
     @Override
     public void create() {
+        System.out.println(Settings.GAME_WIDTH);
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
 
         playerManager = new PlayerManager();
         boardManager = new BoardManager();
-        turnManager = new TurnManager();
-        spinManager = new SpinManager(playerManager);
+        questionManager = new QuestionManager();
+        actionManager = new ActionManager(playerManager, boardManager, questionManager);
+
+        spinManager = new SpinManager(playerManager, actionManager);
 
         GAME_STATE = GameState.WAITING_FOR_ROLL;
     }
@@ -48,24 +52,29 @@ public class Core extends ApplicationAdapter {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && GAME_STATE == GameState.WAITING_FOR_ROLL) {
             spinManager.spin();
         }
+
+        actionManager.input();
     }
 
     public void logic() {
-        turnManager.update();
+
         spinManager.update();
+        actionManager.update();
     }
 
     private void draw() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        ScreenUtils.clear(0.2f, 0.2f, 0.3f, 1f);
 
         shapeRenderer.setColor(Color.WHITE);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         spinManager.drawShapes(shapeRenderer);
         shapeRenderer.end();
 
-        boardManager.draw(shapeRenderer);
+        boardManager.drawShapes(shapeRenderer);
+
         batch.begin();
-        turnManager.draw(batch);
+        boardManager.drawImages(batch);
+        playerManager.draw(batch);
         spinManager.draw(batch);
         batch.end();
 
