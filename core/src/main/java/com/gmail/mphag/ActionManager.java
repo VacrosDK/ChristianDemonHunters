@@ -1,5 +1,8 @@
 package com.gmail.mphag;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 public class ActionManager {
 
     private final PlayerManager playerManager;
@@ -19,14 +22,32 @@ public class ActionManager {
         if(!executingAction) {
             return;
         }
+        handleHighlighting();
+    }
+
+    private void handleInput() {
+        int mouseX = Gdx.input.getX();
+        int mouseY = Gdx.input.getY();
+
+        int newX = (int) (mouseX / Settings.TILE_WIDTH);
+        int newY = (int) (Settings.TILE_ROWS - (mouseY / Settings.TILE_HEIGHT));
+
+        BoardTile tile = boardManager.getTile(newX, newY);
+
         switch(playerManager.getCurrentPlayer().getCurrentSpinType()) {
             case DEMON:
                 //Await input
+                if(tile.isDemonTile() && !tile.belongsTo(playerManager.getCurrentPlayer())) {
+                    tile.spawnDemon();
+                    finishAction();
+                }
                 break;
             case ADD_ANGEL:
-                //Await input
+                if(tile.isAngelTile()) {
+                    tile.spawnAngel();
+                    finishAction();
+                }
                 break;
-
             case REMOVE_ANGEL:
                 //Await input
                 break;
@@ -43,7 +64,11 @@ public class ActionManager {
             return;
         }
 
-        System.out.println("through input");
+        if(!Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            return;
+        }
+
+        handleInput();
 
     }
 
@@ -51,6 +76,10 @@ public class ActionManager {
         if(!executingAction) {
             return;
         }
+        handleHighlighting();
+    }
+
+    private void handleHighlighting() {
         boardManager.resetHighlighting();
         switch(playerManager.getCurrentPlayer().getCurrentSpinType()) {
             case DEMON:

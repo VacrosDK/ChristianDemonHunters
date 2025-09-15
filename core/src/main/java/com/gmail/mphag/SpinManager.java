@@ -134,7 +134,7 @@ public class SpinManager {
 
         int i = random.nextInt(0, values.length);
 
-        spinBoxes.add(new SpinBox(values[i], boxHeight/2, boxWidth, boxHeight));
+        spinBoxes.add(new SpinBox(SpinType.DEMON, boxHeight/2, boxWidth, boxHeight));
     }
 
     public void draw(SpriteBatch batch) {

@@ -30,7 +30,7 @@ public class Core extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
         playerManager = new PlayerManager();
-        boardManager = new BoardManager();
+        boardManager = new BoardManager(playerManager.getPlayerOne(), playerManager.getPlayerTwo());
         questionManager = new QuestionManager();
         actionManager = new ActionManager(playerManager, boardManager, questionManager);
 

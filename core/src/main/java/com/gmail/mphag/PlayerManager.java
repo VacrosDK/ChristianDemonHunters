@@ -38,4 +38,11 @@ public class PlayerManager {
         return player2;
     }
 
+    public Player getPlayerTwo() {
+        return player2;
+    }
+
+    public Player getPlayerOne() {
+        return player1;
+    }
 }

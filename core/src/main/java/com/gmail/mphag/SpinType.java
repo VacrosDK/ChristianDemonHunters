@@ -7,9 +7,9 @@ public enum SpinType {
     ADD_ANGEL(1, "Spawn engel", "spawnAngel.png"),
     DEMON(2, "Spawn dæmon", "spawnDemon.png"),
     QUESTION(3, "Træk spørgsmål", "question.png"),
-    REMOVE_ANGEL(4, "Fjern modstanderengel", "spin1.png"),
+    REMOVE_ANGEL(4, "Fjern modstanderengel", "angelKill.png"),
     SHOOT_WITH_ANGEL(5, "Skyd med engel", "angelShoot.png"),
-    NOTHING(6, "Intet", "spin1.png"),
+    NOTHING(6, "Intet", "nothing.png"),
     MOVE_DEMONS(7, "Alle demoner rykker frem", "moveDemons.png");
 
 

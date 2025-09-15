@@ -17,26 +17,32 @@ public class BoardManager {
     private boolean isHighlightingOpponentAngels; //Om modstanderens angels skal highlightes
     private boolean isHighlightingAngels; //Om ens egne angels skal highlightes
 
-    public BoardManager() {
+    public BoardManager(Player player1, Player player2) {
         for (TileType value : TileType.values()) {
             value.load();
         }
-        load();
+        load(player1, player2);
     }
 
-    public void load() {
+    public void load(Player player2, Player player1) {
+        Player currentPlayer = player1;
         for (int row = 0; row < Settings.TILE_ROWS; row++) {
+
+            if(row > 2) {
+                currentPlayer = player2;
+            }
+
             for (int column = 0; column < Settings.TILE_COLUMNS; column++) {
                 GridPoint2 gridPoint2 = new GridPoint2(column, row);
 
                 if(column == Settings.TILE_COLUMNS - 1) {
-                    boardMap.put(gridPoint2, new BoardTile(gridPoint2, "demonTile.png"));
+                    boardMap.put(gridPoint2, new BoardTile(currentPlayer, gridPoint2, "demonTile.png", true));
                     continue;
                 } else if(column == 1) {
-                    boardMap.put(gridPoint2, new BoardTile(gridPoint2, "angelTile.png"));
+                    boardMap.put(gridPoint2, new BoardTile(currentPlayer, gridPoint2, "angelTile.png", false));
                     continue;
                 }
-                boardMap.put(gridPoint2, new BoardTile(gridPoint2));
+                boardMap.put(gridPoint2, new BoardTile(currentPlayer, gridPoint2));
             }
         }
     }
@@ -100,8 +106,9 @@ public class BoardManager {
     }
 
     public void drawImages(SpriteBatch batch) {
-        drawTileIcons(batch);
         drawTileMark(batch);
+        drawTileIcons(batch);
+
     }
 
     private void drawTileMark(SpriteBatch batch) {
@@ -160,5 +167,9 @@ public class BoardManager {
         this.isHighlightingOpponentAngels = false;
         this.isHighlightingAngelTiles = false;
         this.isHighlightingDemonTiles = false;
+    }
+
+    public BoardTile getTile(int i, int i1) {
+        return this.boardMap.get(new GridPoint2(i, i1));
     }
 }
