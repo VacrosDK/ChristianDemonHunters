@@ -3,7 +3,7 @@ package com.gmail.mphag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public enum TileType {
+public enum TileOccupant {
     EMPTY("empty.png"),
     ANGEL("angel.png"),
     DEMON("demon.png");
@@ -11,7 +11,7 @@ public enum TileType {
     private final String path;
     private Texture texture;
 
-    TileType(String path) {
+    TileOccupant(String path) {
         this.path = path;
     }
 

@@ -40,4 +40,8 @@ public class Player {
     public BitmapFont getFont() {
         return uiText;
     }
+
+    public void resetCurrentSpinType() {
+        this.currentSpinType = null;
+    }
 }

@@ -38,6 +38,13 @@ public class PlayerManager {
         return player2;
     }
 
+    public Player getPlayerNotAtTurn() {
+        if(player1.hasTurn()) {
+            return player2;
+        }
+        return player1;
+    }
+
     public Player getPlayerTwo() {
         return player2;
     }

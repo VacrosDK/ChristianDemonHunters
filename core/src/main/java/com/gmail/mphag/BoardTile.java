@@ -12,21 +12,21 @@ public class BoardTile {
     private boolean isAngelTile;
     private boolean isDemonTile;
 
-    private TileType tileType;
+    private TileOccupant tileOccupant;
     private GridPoint2 gridPoint;
 
     private Texture tileMark = null;
 
     public BoardTile(Player owner, GridPoint2 gridPoint2) {
         this.player = owner;
-        this.tileType = TileType.EMPTY;
+        this.tileOccupant = TileOccupant.EMPTY;
         this.gridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
 
         setupGridPoint();
     }
     public BoardTile(Player owner, GridPoint2 gridPoint2, String tileMarkPath, boolean isDemonTile) {
         this.player = owner;
-        this.tileType = TileType.EMPTY;
+        this.tileOccupant = TileOccupant.EMPTY;
         this.gridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
         this.tileMark = new Texture(Gdx.files.internal(tileMarkPath));
 
@@ -54,16 +54,16 @@ public class BoardTile {
         gridPoint.y += deltaY;
     }
 
-    public void setTileType(TileType tileType) {
-        this.tileType = tileType;
+    public void setTileOccupant(TileOccupant tileOccupant) {
+        this.tileOccupant = tileOccupant;
     }
 
-    public TileType getTileType() {
-        return tileType;
+    public TileOccupant getTileOccupant() {
+        return tileOccupant;
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(tileType.getTexture(), gridPoint.x + Settings.TILE_WIDTH/2 - tileType.getTexture().getWidth()/2, gridPoint.y + Settings.TILE_HEIGHT/8);
+        batch.draw(tileOccupant.getTexture(), gridPoint.x + Settings.TILE_WIDTH/2 - tileOccupant.getTexture().getWidth()/2, gridPoint.y + Settings.TILE_HEIGHT/8);
 
     }
 
@@ -78,7 +78,7 @@ public class BoardTile {
     }
 
     public void spawnDemon() {
-        this.tileType = TileType.DEMON;
+        this.tileOccupant = TileOccupant.DEMON;
     }
 
     public boolean isAngelTile() {
@@ -90,10 +90,22 @@ public class BoardTile {
     }
 
     public void spawnAngel() {
-        this.tileType = TileType.ANGEL;
+        this.tileOccupant = TileOccupant.ANGEL;
     }
 
     public boolean belongsTo(Player currentPlayer) {
         return player == currentPlayer;
+    }
+
+    public GridPoint2 getGridPoint() {
+        return gridPoint;
+    }
+
+    public boolean isEmpty() {
+        return tileOccupant == TileOccupant.EMPTY;
+    }
+
+    public void killAngel() {
+        this.tileOccupant = TileOccupant.EMPTY;
     }
 }

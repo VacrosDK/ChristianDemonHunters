@@ -34,7 +34,7 @@ public class Core extends ApplicationAdapter {
         questionManager = new QuestionManager();
         actionManager = new ActionManager(playerManager, boardManager, questionManager);
 
-        spinManager = new SpinManager(playerManager, actionManager);
+        spinManager = new SpinManager(playerManager, boardManager, actionManager);
 
         GAME_STATE = GameState.WAITING_FOR_ROLL;
     }
@@ -76,6 +76,7 @@ public class Core extends ApplicationAdapter {
         boardManager.drawImages(batch);
         playerManager.draw(batch);
         spinManager.draw(batch);
+        actionManager.draw(batch);
         batch.end();
 
 

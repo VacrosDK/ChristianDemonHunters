@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class SpinManager {
 
     private final PlayerManager playerManager;
+    private final BoardManager boardManager;
     private final ActionManager actionManager;
 
     private final Random random = new Random();
@@ -31,9 +33,11 @@ public class SpinManager {
     private float spinEndPause;
 
     private SpinBox chosenSpinBox;
+    private boolean shouldHide = false;
 
-    public SpinManager(PlayerManager playerManager, ActionManager actionManager) {
+    public SpinManager(PlayerManager playerManager, BoardManager boardManager, ActionManager actionManager) {
         this.playerManager = playerManager;
+        this.boardManager = boardManager;
         this.actionManager = actionManager;
         load();
         resetVariables();
@@ -112,6 +116,7 @@ public class SpinManager {
 
                 playerManager.getCurrentPlayer().setCurrentSpinType(spinBox.getType());
                 actionManager.executeAction();
+                shouldHide = true;
 
                 break;
             }
@@ -130,14 +135,43 @@ public class SpinManager {
 
     private void spawnNewBox() {
 
-        SpinType[] values = SpinType.values();
+        List<SpinType> values = new ArrayList<>(Arrays.asList(SpinType.values()));
 
-        int i = random.nextInt(0, values.length);
+        updateSpinPool(values);
 
-        spinBoxes.add(new SpinBox(SpinType.DEMON, boxHeight/2, boxWidth, boxHeight));
+        int i = random.nextInt(0, values.size());
+
+
+        spinBoxes.add(new SpinBox(values.get(i), boxHeight/2, boxWidth, boxHeight));
+    }
+
+    private void updateSpinPool(List<SpinType> values) {
+        if(!boardManager.hasAnyDemonsOnBoard()) {
+            values.remove(SpinType.MOVE_DEMONS);
+        }
+
+        if(!boardManager.canSpawnMoreAngels(playerManager.getCurrentPlayer())) {
+            values.remove(SpinType.ADD_ANGEL);
+        }
+
+        if(!boardManager.canSpawnMoreDemons(playerManager.getCurrentPlayer())) {
+            values.remove(SpinType.ADD_DEMON);
+        }
+
+        if(!boardManager.hasAngelsOfPlayer(playerManager.getCurrentPlayer())) {
+            values.remove(SpinType.SHOOT_WITH_ANGEL);
+        }
+
+        if(!boardManager.hasAngelsOfPlayer(playerManager.getPlayerNotAtTurn())) {
+            values.remove(SpinType.REMOVE_ANGEL);
+        }
     }
 
     public void draw(SpriteBatch batch) {
+
+        if(shouldHide) {
+            return;
+        }
 
         for (SpinBox spinBox : spinBoxes) {
             spinBox.draw(batch);
@@ -146,6 +180,10 @@ public class SpinManager {
     }
 
     public void drawShapes(ShapeRenderer shapeRenderer) {
+
+        if(shouldHide) {
+            return;
+        }
 
         if(Core.GAME_STATE != GameState.SPINNING) {
             return;
@@ -166,6 +204,8 @@ public class SpinManager {
         Core.GAME_STATE = GameState.SPINNING;
         resetVariables();
         hasSpun = true;
+        shouldHide = false;
+        this.spinBoxes.clear();
     }
 
 
