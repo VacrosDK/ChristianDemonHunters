@@ -138,6 +138,7 @@ public class ActionManager {
                 displayActionMessage("You have been skipped!");
                 break;
             case QUESTION:
+                //TODO
                 finishAction();
                 break;
 
@@ -175,15 +176,15 @@ public class ActionManager {
 
                     displayActionMessage("All angel tiles are full!");
 
-
                 }
                 break;
 
             case SHOOT_WITH_ANGEL:
                 finishAction();
+                //TODO
             case REMOVE_ANGEL:
                 finishAction();
-
+                //TODO
                 break;
 
             default:
