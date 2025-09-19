@@ -34,6 +34,7 @@ public class SpinManager {
 
     private SpinBox chosenSpinBox;
     private boolean shouldHide = false;
+    private boolean spinTotallyDone = false;
 
     public SpinManager(PlayerManager playerManager, BoardManager boardManager, ActionManager actionManager) {
         this.playerManager = playerManager;
@@ -63,6 +64,10 @@ public class SpinManager {
             return;
         }
 
+        if(spinTotallyDone) {
+            return;
+        }
+
         if(spinBoxes.size() < maxSpinBoxAmount) {
             if(newBoxCanSpawn()) {
                 spawnNewBox();
@@ -87,6 +92,9 @@ public class SpinManager {
 
     private void updateSpinSpeed() {
 
+        if(spinTotallyDone) {
+            return;
+        }
         spinTime -= spinSpeedDecrement * Gdx.graphics.getDeltaTime();
 
         if(spinTime <= 0) {
@@ -104,6 +112,7 @@ public class SpinManager {
             spinEndPause -= spinSpeedDecrement * Gdx.graphics.getDeltaTime();
 
             if(spinEndPause <= 0) {
+                spinTotallyDone = true;
                 finishSpin();
             }
         }
@@ -141,8 +150,7 @@ public class SpinManager {
 
         int i = random.nextInt(0, values.size());
 
-
-        spinBoxes.add(new SpinBox(SpinType.QUESTION, boxHeight/2, boxWidth, boxHeight));
+        spinBoxes.add(new SpinBox(values.get(i), boxHeight/2, boxWidth, boxHeight));
     }
 
     private void updateSpinPool(List<SpinType> values) {
@@ -204,6 +212,7 @@ public class SpinManager {
         Core.GAME_STATE = GameState.SPINNING;
         resetVariables();
         hasSpun = true;
+        this.spinTotallyDone = false;
         shouldHide = false;
         this.spinBoxes.clear();
     }

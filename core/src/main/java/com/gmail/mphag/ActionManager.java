@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public class ActionManager {
 
@@ -31,6 +30,7 @@ public class ActionManager {
     private String errorText = "";
     private boolean isShooting = false;
     private boolean questionHasBeenAsked = false;
+    private boolean isExecuting;
 
     public ActionManager(PlayerManager playerManager, BoardManager boardManager, QuestionManager questionManager) {
         this.playerManager = playerManager;
@@ -43,6 +43,8 @@ public class ActionManager {
     }
 
     public void update() {
+        System.out.println(isAwaitingInput);
+
         handleHighlighting();
 
         if (isDrawingError && TimeUtils.timeSinceMillis(drawingStartTime) > errorMessageTime) {
@@ -57,7 +59,7 @@ public class ActionManager {
         }
 
         if (questionManager.isQuestionDone() && questionHasBeenAsked) {
-            if (!questionManager.isWaitingForFreePick()) {
+            if (!questionManager.isWaitingForFreePick() && playerManager.getCurrentPlayer().getCurrentSpinType() == SpinType.QUESTION) {
                 questionHasBeenAsked = false;
                 finishAction();
             } else {
@@ -75,12 +77,13 @@ public class ActionManager {
         if (questionManager.isWaitingForFreePick()) {
             Utils.drawStringCentered(font2, batch, "KORREKT! VÆLG PRÆMIE:", Settings.GAME_WIDTH / 2, (int) (Settings.GAME_HEIGHT - Settings.TILE_HEIGHT));
 
-            FreePickLocation[] values = FreePickLocation.values();
+            QuestionChoice[] values = QuestionChoice.values();
             List<SpinType> spinTypes = new ArrayList<>(Arrays.asList(SpinType.values()));
             spinTypes.remove(SpinType.QUESTION);
 
             for (int i = 0; i < spinTypes.size(); i++) {
-                FreePickLocation gridLocation = values[i];
+                QuestionChoice gridLocation = values[i];
+                values[i].assignSpinType(spinTypes.get(i));
 
                 int width = 0;
 
@@ -90,7 +93,7 @@ public class ActionManager {
                     width = -spinTypes.get(i).getTexture().getWidth() / 2;
                 }
 
-                    batch.draw(spinTypes.get(i).getTexture(), gridLocation.getGridPoint2().x + width, gridLocation.getGridPoint2().y);
+                batch.draw(spinTypes.get(i).getTexture(), gridLocation.getGridPoint2().x + width, gridLocation.getGridPoint2().y);
             }
         }
 
@@ -161,7 +164,41 @@ public class ActionManager {
     }
 
     private void handleFreePickInput() {
-        //TODO
+        QuestionChoice[] vals = QuestionChoice.values();
+
+        ArrayList<QuestionChoice> locations = new ArrayList<>(Arrays.asList(vals));
+
+        int mouseX = Gdx.input.getX();
+        int mouseY = Settings.GAME_HEIGHT - Gdx.input.getY();
+
+        int textureWidth = SpinType.QUESTION.getTexture().getWidth();
+        int textureHeight = SpinType.QUESTION.getTexture().getHeight();
+
+        int index = 0;
+
+        for (QuestionChoice questionChoice : locations) {
+
+            GridPoint2 gp = questionChoice.getGridPoint2();
+            GridPoint2 deltaGridPoint = new GridPoint2(gp.x, gp.y);
+
+            if (index == 2 || index == 3) {
+                deltaGridPoint.set(gp.x - textureWidth, gp.y);
+            } else if(index == 4 || index == 5) {
+                deltaGridPoint.set(gp.x - textureWidth/2, gp.y);
+            }
+
+            if (mouseX > deltaGridPoint.x && mouseX < deltaGridPoint.x + textureWidth && mouseY > deltaGridPoint.y && mouseY < deltaGridPoint.y + textureHeight) {
+
+                playerManager.getCurrentPlayer().setCurrentSpinType(questionChoice.getAssignedSpinType());
+                questionManager.setFreePickFinished();
+                isExecuting = false;
+                executeAction();
+
+                break;
+            }
+
+            index++;
+        }
     }
 
     public void input() {
@@ -179,7 +216,7 @@ public class ActionManager {
 
     private void handleHighlighting() {
         boardManager.resetHighlighting();
-
+        System.out.println(playerManager.getCurrentPlayer().getCurrentSpinType());
         if (playerManager.getCurrentPlayer().getCurrentSpinType() == null) {
             return;
         }
@@ -203,13 +240,18 @@ public class ActionManager {
     }
 
     public void executeAction() {
+        if(isExecuting) {
+            return;
+        }
+
         Player currentPlayer = playerManager.getCurrentPlayer();
         SpinType currentSpinType = currentPlayer.getCurrentSpinType();
 
+        this.isExecuting = true;
+
         switch (currentSpinType) {
             case NOTHING:
-                finishAction();
-                //displayActionMessage("You have been skipped!");
+                displayActionMessage("Du blev sprunget over!");
                 break;
             case QUESTION:
                 if (questionHasBeenAsked) {
@@ -222,14 +264,14 @@ public class ActionManager {
             case MOVE_DEMONS:
 
                 if (!boardManager.hasAnyDemonsOnBoard()) {
-                    displayActionMessage("No demons could move...");
+                    displayActionMessage("Ingen dæmoner flytter...");
                     break;
                 }
 
                 if (!isDrawingError) {
                     boardManager.moveAllDemons();
                 }
-                displayActionMessage("All demons move once...");
+                displayActionMessage("Alle dæmoner flytter...");
 
                 break;
 
@@ -240,7 +282,7 @@ public class ActionManager {
                     isAwaitingInput = true;
                 } else {
 
-                    displayActionMessage("All demon tiles are occupied!");
+                    displayActionMessage("Alle dæmonfelter er fyldte!");
 
                 }
                 break;
@@ -251,7 +293,7 @@ public class ActionManager {
                     isAwaitingInput = true;
                 } else {
 
-                    displayActionMessage("All angel tiles are full...");
+                    displayActionMessage("Alle englefelter er fyldte...");
 
                 }
                 break;
@@ -260,7 +302,7 @@ public class ActionManager {
                 if (boardManager.hasAngelsOfPlayer(currentPlayer)) {
                     isAwaitingInput = true;
                 } else {
-                    displayActionMessage("No angels to shoot...");
+                    displayActionMessage("Ingen engle kan angribe...");
                 }
 
                 break;
@@ -269,7 +311,7 @@ public class ActionManager {
                 if (boardManager.hasAngelsOfPlayer(playerManager.getPlayerNotAtTurn())) {
                     isAwaitingInput = true;
                 } else {
-                    displayActionMessage("No angels to remove...");
+                    displayActionMessage("Ingen engle kan fjernes...");
                 }
 
                 break;
@@ -296,9 +338,12 @@ public class ActionManager {
     private void finishAction() {
         this.isAwaitingInput = false;
         this.questionHasBeenAsked = false;
+        this.isExecuting = false;
         playerManager.switchTurn();
         Core.GAME_STATE = GameState.WAITING_FOR_ROLL;
         playerManager.getCurrentPlayer().resetCurrentSpinType();
     }
+
+
 
 }

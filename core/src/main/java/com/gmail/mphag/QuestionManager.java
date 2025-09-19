@@ -36,18 +36,70 @@ public class QuestionManager {
     }
 
     public void loadQuestions() {
-        list.add(new Question("Hvad fejrer vi til jul?", "Jesu fødsel", "Jesu død", "Jesu dåb", "Jesu fødsel"));
-        list.add(new Question("Hvor blev Jesus født?", "Betlehem", "Nazaret", "Jerusalem", "Betlehem"));
-        list.add(new Question("Hvad fejrer vi til påske?", "Jesu opstandelse", "Jesu fødsel", "Jesu himmelfart", "Jesu opstandelse"));
-        list.add(new Question("Hvad fejrer vi til pinse?", "At Helligånden kom til disciplene", "Jesu fødsel", "Skabelsen", "At Helligånden kom til disciplene"));
-        list.add(new Question("Hvad symboliserer brødet ved nadveren?", "Jesu krop", "Jesu blod", "Guds ord", "Jesu krop"));
-        list.add(new Question("Hvad symboliserer vinen ved nadveren?", "Jesu blod", "Jesu krop", "Helligånden", "Jesu blod"));
-        list.add(new Question("Hvem døde på korset?", "Jesus", "Moses", "Abraham", "Jesus"));
-        list.add(new Question("Hvem blev kastet i løvekulen?", "Daniel", "Josef", "Moses", "Daniel"));
-        list.add(new Question("Hvem byggede arken?", "Noa", "Abraham", "David", "Noa"));
-        list.add(new Question("Hvad betyder ordet 'Amen'?", "Sådan ske det", "Tak", "Farvel", "Sådan ske det"));
-        list.add(new Question("Hvilken bøn lærte Jesus sine disciple?", "Fadervor", "Trosbekendelsen", "Nadverbønnen", "Fadervor"));
-        list.add(new Question("Hvem gik på vandet?", "Jesus", "Moses", "Peter", "Jesus"));
+        list.add(new Question("Hvad fejrer vi jul?", "Jesu død", "Jesu fødsel", "Jesu dåb", "Jesu fødsel"));
+        list.add(new Question("Hvor blev Jesus født?", "Nazaret", "Jerusalem", "Betlehem", "Betlehem"));
+        list.add(new Question("Hvad fejrer vi påske?", "Jesu himmelfart", "Jesu opstandelse", "Jesu fødsel", "Jesu opstandelse"));
+        list.add(new Question("Hvad fejrer vi pinse?", "Skabelsen", "Jesu fødsel", "Helligånden kom", "Helligånden kom"));
+        list.add(new Question("Hvad er brødet i nadveren?", "Jesu blod", "Jesu krop", "Guds ord", "Jesu krop"));
+        list.add(new Question("Hvad er vinen i nadveren?", "Helligånden", "Jesu blod", "Jesu krop", "Jesu blod"));
+        list.add(new Question("Hvem døde på korset?", "Abraham", "Jesus", "Moses", "Jesus"));
+        list.add(new Question("Hvem var i løvekulen?", "Josef", "Moses", "Daniel", "Daniel"));
+        list.add(new Question("Hvem byggede arken?", "Abraham", "Noa", "David", "Noa"));
+        list.add(new Question("Hvad betyder 'Amen'?", "Tak", "Farvel", "Så ske det", "Så ske det"));
+        list.add(new Question("Hvilken bøn lærte Jesus?", "Trosbek.", "Fadervor", "Nadverbøn", "Fadervor"));
+        list.add(new Question("Hvem gik på vandet?", "Peter", "Moses", "Jesus", "Jesus"));
+        list.add(new Question("Hvem var Jesu mor?", "Maria", "Rebekka", "Sara", "Maria"));
+        list.add(new Question("Hvem var Jesu far?", "Abraham", "Josef", "David", "Josef"));
+        list.add(new Question("Hvad betyder 'Kristus'?", "Hellig", "Den salvede", "Frelser", "Den salvede"));
+        list.add(new Question("Hvem blev fristet 40 dage?", "Jesus", "Elia", "Moses", "Jesus"));
+        list.add(new Question("Hvem fornægtede Jesus 3 gange?", "Peter", "Johannes", "Jakob", "Peter"));
+        list.add(new Question("Hvilken dag døde Jesus?", "Påskedag", "Palmesøndag", "Langfredag", "Langfredag"));
+        list.add(new Question("Hvad skete himmelfart?", "Jesus døbt", "Jesus til himlen", "Jesus født", "Jesus til himlen"));
+        list.add(new Question("Hvad er dåben?", "Blive voksen", "Del af Guds fam.", "Syndsforlad.", "Del af Guds fam."));
+        list.add(new Question("Hvilket tegn gav Gud Noa?", "Regnbuen", "Stjernen", "Duen", "Regnbuen"));
+        list.add(new Question("Hvem fik De 10 bud?", "Abraham", "David", "Moses", "Moses"));
+        list.add(new Question("Hvem kaldes troens fader?", "Jakob", "Abraham", "Noa", "Abraham"));
+        list.add(new Question("Hvad er det største bud?", "Giv tiende", "Elsk Gud og næste", "Bed dagligt", "Elsk Gud og næste"));
+        list.add(new Question("Hvad betyder 'disciple'?", "Lærlinge", "Hyrder", "Profeter", "Lærlinge"));
+        list.add(new Question("Hvad lovede Jesus?", "Et tempel", "Rigdom", "Helligånden", "Helligånden"));
+        list.add(new Question("Hvor mange disciple?", "7", "12", "10", "12"));
+        list.add(new Question("Hvem var yngst disciple?", "Johannes", "Thomas", "Peter", "Johannes"));
+        list.add(new Question("Hvem skrev flest breve?", "Paulus", "Moses", "David", "Paulus"));
+        list.add(new Question("Hvilken bog om skabelsen?", "Salmerne", "1. Mosebog", "Joh.ev.", "1. Mosebog"));
+        list.add(new Question("Hvad betyder 'konfirmation'?", "Bekræfte dåb", "Blive voksen", "Blive gift", "Bekræfte dåb"));
+        list.add(new Question("Hvad sagde Jesus om fremtiden?", "Saml guld", "Vær ikke bekymret", "Bed om hævn", "Vær ikke bekymret"));
+        list.add(new Question("Hvem var den første mand?", "Adam", "Noa", "Moses", "Adam"));
+        list.add(new Question("Hvem var den første kvinde?", "Sara", "Eva", "Maria", "Eva"));
+        list.add(new Question("Hvem blev solgt af sine brødre?", "Moses", "Josef", "David", "Josef"));
+        list.add(new Question("Hvem kæmpede mod Goliat?", "Saul", "Moses", "David", "David"));
+        list.add(new Question("Hvem ledte israelitterne ud af Egypten?", "Moses", "Abraham", "Noa", "Moses"));
+        list.add(new Question("Hvem fik lovens tavler?", "Jakob", "Moses", "Abraham", "Moses"));
+        list.add(new Question("Hvem red ind i Jerusalem på et æsel?", "Jesus", "David", "Peter", "Jesus"));
+        list.add(new Question("Hvem var konge i Israel efter Saul?", "Samuel", "David", "Salomon", "David"));
+        list.add(new Question("Hvad kaldes den første bog i Bibelen?", "1. Mosebog", "Salmerne", "Matthæus", "1. Mosebog"));
+        list.add(new Question("Hvad kaldes den sidste bog i Bibelen?", "Johs. Åbenbaring", "Markus", "Ordsprogene", "Johs. Åbenbaring"));
+        list.add(new Question("Hvad er den korteste bøn?", "Amen", "Kyrie", "Tak", "Amen"));
+        list.add(new Question("Hvad er et andet navn for evangelierne?", "De gode nyheder", "Profeterne", "Lovene", "De gode nyheder"));
+        list.add(new Question("Hvem tvivlede, før han så Jesu sår?", "Thomas", "Peter", "Johannes", "Thomas"));
+        list.add(new Question("Hvem forrådte Jesus?", "Judas", "Paulus", "Peter", "Judas"));
+        list.add(new Question("Hvem skrev Salmernes Bog?", "Abraham", "David", "Moses", "David"));
+        list.add(new Question("Hvad betyder 'Messias'?", "Den salvede", "Hellig", "Frelser", "Den salvede"));
+        list.add(new Question("Hvem fik løftet om mange efterkommere?", "Moses", "Abraham", "Noa", "Abraham"));
+        list.add(new Question("Hvem dræbte Abel?", "Josef", "Esau", "Kain", "Kain"));
+        list.add(new Question("Hvem byggede templet i Jerusalem?", "Moses", "Salomon", "David", "Salomon"));
+        list.add(new Question("Hvad er 'Fadervor'?", "En salme", "En bøn", "En profeti", "En bøn"));
+        list.add(new Question("Hvor blev Jesus døbt?", "Jordanfloden", "Nilen", "Genesaret sø", "Jordanfloden"));
+        list.add(new Question("Hvem døbte Jesus?", "Johannes Døber", "Paulus", "Peter", "Johannes Døber"));
+        list.add(new Question("Hvem var Jesu første disciple?", "Peter og Andreas", "Moses og Aron", "Jakob og Esau", "Peter og Andreas"));
+        list.add(new Question("Hvor mange dage var Jesus død?", "3", "2", "7", "3"));
+        list.add(new Question("Hvem skrev Apostlenes Gerninger?", "Paulus", "Lukas", "Matthæus", "Lukas"));
+        list.add(new Question("Hvad betyder 'evangelium'?", "Godt budskab", "Profeti", "Lov", "Godt budskab"));
+        list.add(new Question("Hvad betyder 'kirke'?", "Bygning", "Forsamling", "Folk", "Forsamling"));
+        list.add(new Question("Hvilken dag hvilede Gud?", "Den 6.", "Den 1.", "Den 7.", "Den 7."));
+        list.add(new Question("Hvem bragte de vise mænd gaver til?", "Abraham", "Moses", "Jesus", "Jesus"));
+        list.add(new Question("Hvilken konge ville dræbe Jesus som barn?", "Herodes", "Pilatus", "Nebukadnesar", "Herodes"));
+        list.add(new Question("Hvad er det største håb i kristendommen?", "Evigt liv", "Sejr", "Rigdom", "Evigt liv"));
+        list.add(new Question("Hvad kaldes Jesu første under?", "Helbrede blind", "Gå på vandet", "Vand til vin", "Vand til vin"));
 
     }
 
@@ -177,7 +229,6 @@ public class QuestionManager {
     }
 
     private void finishQuestion() {
-        System.out.println("Finish");
         questionDone = true;
         questionIsUnderways = false;
     }
@@ -259,4 +310,10 @@ public class QuestionManager {
     public boolean isWaitingForFreePick() {
         return requestFreePick;
     }
+
+    public void setFreePickFinished() {
+        finishQuestion();
+        this.requestFreePick = false;
+    }
+
 }

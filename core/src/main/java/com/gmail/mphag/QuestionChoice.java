@@ -2,7 +2,7 @@ package com.gmail.mphag;
 
 import com.badlogic.gdx.math.GridPoint2;
 
-public enum FreePickLocation {
+public enum QuestionChoice {
 
     //C1
     L1(new GridPoint2((int) Settings.TILE_WIDTH, (int) (Settings.TILE_HEIGHT + Settings.TILE_HEIGHT/2))),
@@ -18,12 +18,21 @@ public enum FreePickLocation {
 
 
     private final GridPoint2 gridPoint2;
+    private SpinType assignedSpinType;
 
-    FreePickLocation(GridPoint2 gridPoint2) {
+    QuestionChoice(GridPoint2 gridPoint2) {
         this.gridPoint2 = gridPoint2;
     }
 
     public GridPoint2 getGridPoint2() {
         return gridPoint2;
+    }
+
+    public void assignSpinType(SpinType spinType) {
+        this.assignedSpinType = spinType;
+    }
+
+    public SpinType getAssignedSpinType() {
+        return assignedSpinType;
     }
 }
