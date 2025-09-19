@@ -15,4 +15,5 @@ public class Settings {
     public static final float TILE_HEIGHT = GAME_HEIGHT / TILE_ROWS - BORDER_HEIGHT / TILE_ROWS;
     public static final float TILE_WIDTH = GAME_WIDTH / TILE_COLUMNS;
 
+    public static final int PROJECTILE_SPEED = 1000;
 }

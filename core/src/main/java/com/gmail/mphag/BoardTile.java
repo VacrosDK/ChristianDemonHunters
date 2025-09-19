@@ -43,7 +43,7 @@ public class BoardTile {
 
     private void setupGridPoint() {
         this.gridPoint.x = (int) (gridPoint.x * Settings.TILE_WIDTH);
-        System.out.println("New: " + gridPoint.x);
+
         int deltaY = 0;
 
         if(gridPoint.y > 2) {
@@ -107,5 +107,9 @@ public class BoardTile {
 
     public void killAngel() {
         this.tileOccupant = TileOccupant.EMPTY;
+    }
+
+    public void shootWithAngel() {
+
     }
 }

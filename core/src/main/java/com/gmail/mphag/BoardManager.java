@@ -2,9 +2,11 @@ package com.gmail.mphag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.util.*;
 
@@ -12,14 +14,21 @@ public class BoardManager {
 
     private final Map<GridPoint2, BoardTile> boardMap = new HashMap<>();
 
+    private final List<Projectile> projectiles = new ArrayList<>();
+    private long lastUpdate = TimeUtils.millis();
+
+    private final Texture projectileTexture;
+
     private Player currentPlayer;
 
     private boolean isHighlightingDemonTiles; //Om demon tiles skal highlightes
     private boolean isHighlightingAngelTiles; //Om angel tiles skal highlightes
     private boolean isHighlightingOpponentAngels; //Om modstanderens angels skal highlightes
     private boolean isHighlightingAngels; //Om ens egne angels skal highlightes
+    private boolean isDoneShooting;
 
     public BoardManager(Player player1, Player player2) {
+        this.projectileTexture = new Texture(Gdx.files.internal("fireball.png"));
         for (TileOccupant value : TileOccupant.values()) {
             value.load();
         }
@@ -55,6 +64,7 @@ public class BoardManager {
         drawPlayerBases(shapeRenderer);
         drawHighlighting(shapeRenderer);
     }
+
 
     private void drawHighlighting(ShapeRenderer shapeRenderer) {
 
@@ -157,7 +167,13 @@ public class BoardManager {
     public void drawImages(SpriteBatch batch) {
         drawTileMark(batch);
         drawTileIcons(batch);
+        drawProjectiles(batch);
+    }
 
+    private void drawProjectiles(SpriteBatch batch) {
+        for (Projectile projectile : projectiles) {
+            projectile.draw(batch);
+        }
     }
 
     private void drawTileMark(SpriteBatch batch) {
@@ -185,13 +201,8 @@ public class BoardManager {
             this.boardMap.get(gridPoint2).setTileOccupant(TileOccupant.EMPTY);
             this.boardMap.get(gridPoint2.set(gridPoint2.x - 1, gridPoint2.y)).setTileOccupant(TileOccupant.DEMON);
 
-            if(gridPoint2.x - 1 == 0) {
-                System.out.println("WIN");
-            }
 
         }
-
-        System.out.println("done");
     }
 
     public void highlightDemonTiles(Player currentPlayer) {
@@ -270,5 +281,45 @@ public class BoardManager {
             }
         }
         return false;
+    }
+
+    public void shootWithAngel(BoardTile tile) {
+        isDoneShooting = false;
+        if(tile.getTileOccupant() != TileOccupant.ANGEL) {
+            return;
+        }
+
+        Projectile projectile = new Projectile(projectileTexture, new GridPoint2((int) (tile.getGridPoint().x / Settings.TILE_WIDTH), (int) ((tile.getGridPoint().y) /Settings.TILE_HEIGHT)));
+
+        projectiles.add(projectile);
+
+    }
+
+    public void update() {
+        if(!(TimeUtils.timeSinceMillis(lastUpdate) > 500)) {
+            return;
+        }
+
+        ArrayList<Projectile> projectilesToRemove = new ArrayList<>();
+
+        for (Projectile projectile : projectiles) {
+
+            projectile.update(boardMap.values());
+
+            if(projectile.isShotIsDone()) {
+                projectilesToRemove.add(projectile);
+                isDoneShooting = true;
+            }
+
+        }
+
+        projectiles.removeAll(projectilesToRemove);
+
+        lastUpdate = TimeUtils.millis();
+
+    }
+
+    public boolean isDoneShooting() {
+        return isDoneShooting;
     }
 }

@@ -22,4 +22,23 @@ public class Question {
         return answer.equals(correctAnswer);
     }
 
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getAnswer1() {
+        return answer1;
+    }
+
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public String getAnswer3() {
+        return answer3;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
 }

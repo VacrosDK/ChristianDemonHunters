@@ -54,12 +54,14 @@ public class Core extends ApplicationAdapter {
         }
 
         actionManager.input();
+        questionManager.input();
     }
 
     public void logic() {
-
+        boardManager.update();
         spinManager.update();
         actionManager.update();
+        questionManager.logic();
     }
 
     private void draw() {
@@ -76,10 +78,15 @@ public class Core extends ApplicationAdapter {
         boardManager.drawImages(batch);
         playerManager.draw(batch);
         spinManager.draw(batch);
-        actionManager.draw(batch);
+
+
         batch.end();
 
+        questionManager.drawShapes(shapeRenderer);
+        questionManager.drawImages(batch);
 
+        actionManager.drawShapes(shapeRenderer);
+        actionManager.draw(batch);
     }
 
     @Override

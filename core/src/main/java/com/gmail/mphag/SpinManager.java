@@ -142,7 +142,7 @@ public class SpinManager {
         int i = random.nextInt(0, values.size());
 
 
-        spinBoxes.add(new SpinBox(values.get(i), boxHeight/2, boxWidth, boxHeight));
+        spinBoxes.add(new SpinBox(SpinType.QUESTION, boxHeight/2, boxWidth, boxHeight));
     }
 
     private void updateSpinPool(List<SpinType> values) {
