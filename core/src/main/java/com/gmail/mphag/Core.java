@@ -42,9 +42,36 @@ public class Core extends ApplicationAdapter {
     @Override
     public void render() {
 
+        if(boardManager.gameIsOver()) {
+            handleFinishScreen();
+            return;
+        }
+
         input();
         logic();
         draw();
+
+    }
+
+    private void handleFinishScreen() {
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+        if(boardManager.getGameWinner() == 1) {
+            shapeRenderer.setColor(ColorType.PLAYER_BASE_TWO.getColor());
+        } else {
+            shapeRenderer.setColor(ColorType.PLAYER_BASE_ONE.getColor());
+        }
+
+        shapeRenderer.rect(0,0,Settings.GAME_WIDTH, Settings.GAME_HEIGHT);
+
+        shapeRenderer.end();
+
+        batch.begin();
+
+        boardManager.drawWinner(batch);
+
+        batch.end();
 
     }
 

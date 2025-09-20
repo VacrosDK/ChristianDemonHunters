@@ -43,7 +43,7 @@ public class ActionManager {
     }
 
     public void update() {
-        System.out.println(isAwaitingInput);
+
 
         handleHighlighting();
 
@@ -216,7 +216,7 @@ public class ActionManager {
 
     private void handleHighlighting() {
         boardManager.resetHighlighting();
-        System.out.println(playerManager.getCurrentPlayer().getCurrentSpinType());
+
         if (playerManager.getCurrentPlayer().getCurrentSpinType() == null) {
             return;
         }

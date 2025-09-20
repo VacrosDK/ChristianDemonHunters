@@ -3,6 +3,7 @@ package com.gmail.mphag;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
@@ -21,14 +22,19 @@ public class BoardManager {
 
     private Player currentPlayer;
 
+    private BitmapFont winnerFont;
+
     private boolean isHighlightingDemonTiles; //Om demon tiles skal highlightes
     private boolean isHighlightingAngelTiles; //Om angel tiles skal highlightes
     private boolean isHighlightingOpponentAngels; //Om modstanderens angels skal highlightes
     private boolean isHighlightingAngels; //Om ens egne angels skal highlightes
     private boolean isDoneShooting;
+    private boolean gameIsOver;
+    private int gameWinner;
 
     public BoardManager(Player player1, Player player2) {
         this.projectileTexture = new Texture(Gdx.files.internal("fireball.png"));
+        this.winnerFont = new BitmapFont(Gdx.files.internal("winnerFont.fnt"));
         for (TileOccupant value : TileOccupant.values()) {
             value.load();
         }
@@ -184,25 +190,56 @@ public class BoardManager {
 
     public void moveAllDemons() {
 
-        List<GridPoint2> demonsToMove = new ArrayList<>();
+        List<BoardTile> demonsToMove = new ArrayList<>();
 
-        for (int column = Settings.TILE_COLUMNS - 1; column >= 0; column--) {
-            for (int row = 0; row < Settings.TILE_ROWS; row++) {
-                BoardTile tile = this.boardMap.get(new GridPoint2(column, row));
+        Collection<BoardTile> values = this.boardMap.values();
 
-                if(tile.getTileOccupant() == TileOccupant.DEMON) {
-                    demonsToMove.add(new GridPoint2(column, row));
-                }
-
+        for (BoardTile value : values) {
+            if(value.getTileOccupant() == TileOccupant.DEMON) {
+                demonsToMove.add(value);
             }
         }
 
-        for (GridPoint2 gridPoint2 : demonsToMove) {
-            this.boardMap.get(gridPoint2).setTileOccupant(TileOccupant.EMPTY);
-            this.boardMap.get(gridPoint2.set(gridPoint2.x - 1, gridPoint2.y)).setTileOccupant(TileOccupant.DEMON);
+        for (BoardTile boardTile : demonsToMove) {
 
+            GridPoint2 gridPoint = boardTile.getOriginalGridPoint();
+
+            GridPoint2 nextGridPoint = new GridPoint2(gridPoint.x - 1, gridPoint.y );
+
+            if(nextGridPoint.x == 0) {
+                if(gridPoint.y < 3) {
+                    finishGame(1);
+                } else {
+                    finishGame(2);
+                }
+            }
+
+            BoardTile nextTile = this.boardMap.get(nextGridPoint);
+
+            if(nextTile.getTileOccupant() == TileOccupant.ANGEL) {
+                nextTile.setTileOccupant(TileOccupant.EMPTY);
+                return;
+            } else {
+                nextTile.setTileOccupant(TileOccupant.DEMON);
+            }
+
+            boardTile.setTileOccupant(TileOccupant.EMPTY);
 
         }
+
+    }
+
+    private void finishGame(int playerNumber) {
+        this.gameIsOver = true;
+        this.gameWinner = playerNumber;
+    }
+
+    public boolean gameIsOver() {
+        return gameIsOver;
+    }
+
+    public int getGameWinner() {
+        return gameWinner;
     }
 
     public void highlightDemonTiles(Player currentPlayer) {
@@ -321,5 +358,9 @@ public class BoardManager {
 
     public boolean isDoneShooting() {
         return isDoneShooting;
+    }
+
+    public void drawWinner(SpriteBatch batch) {
+        Utils.drawStringCentered(winnerFont, batch, "Spiller " + getGameWinner() + " har vundet!", Settings.GAME_WIDTH/2, Settings.GAME_HEIGHT/2);
     }
 }

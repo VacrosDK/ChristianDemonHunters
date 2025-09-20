@@ -15,12 +15,15 @@ public class BoardTile {
     private TileOccupant tileOccupant;
     private GridPoint2 gridPoint;
 
+    private GridPoint2 originalGridPoint;
+
     private Texture tileMark = null;
 
     public BoardTile(Player owner, GridPoint2 gridPoint2) {
         this.player = owner;
         this.tileOccupant = TileOccupant.EMPTY;
         this.gridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
+        this.originalGridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
 
         setupGridPoint();
     }
@@ -28,6 +31,7 @@ public class BoardTile {
         this.player = owner;
         this.tileOccupant = TileOccupant.EMPTY;
         this.gridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
+        this.originalGridPoint = new GridPoint2(gridPoint2.x, gridPoint2.y);
         this.tileMark = new Texture(Gdx.files.internal(tileMarkPath));
 
         if(isDemonTile) {
@@ -99,6 +103,10 @@ public class BoardTile {
 
     public GridPoint2 getGridPoint() {
         return gridPoint;
+    }
+
+    public GridPoint2 getOriginalGridPoint() {
+        return originalGridPoint;
     }
 
     public boolean isEmpty() {
