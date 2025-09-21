@@ -1,4 +1,4 @@
-package com.gmail.mphag;
+package com.gmail.mphag.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,6 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.gmail.mphag.*;
+import com.gmail.mphag.board.BoardManager;
+import com.gmail.mphag.board.BoardTile;
+import com.gmail.mphag.board.TileOccupant;
+import com.gmail.mphag.question.QuestionChoice;
+import com.gmail.mphag.question.QuestionManager;
+import com.gmail.mphag.spin.SpinType;
+import com.gmail.mphag.type.GameState;
 
 import java.util.ArrayList;
 import java.util.Arrays;

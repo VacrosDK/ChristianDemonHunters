@@ -1,4 +1,4 @@
-package com.gmail.mphag;
+package com.gmail.mphag.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

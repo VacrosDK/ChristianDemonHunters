@@ -1,6 +1,8 @@
-package com.gmail.mphag;
+package com.gmail.mphag.question;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.gmail.mphag.Settings;
+import com.gmail.mphag.spin.SpinType;
 
 public enum QuestionChoice {
 

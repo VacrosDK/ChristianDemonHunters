@@ -1,7 +1,8 @@
-package com.gmail.mphag;
+package com.gmail.mphag.spin;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
+import com.gmail.mphag.Settings;
 
 public class SpinBox {
 

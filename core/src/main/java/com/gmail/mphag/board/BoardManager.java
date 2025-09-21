@@ -1,4 +1,4 @@
-package com.gmail.mphag;
+package com.gmail.mphag.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.gmail.mphag.*;
+import com.gmail.mphag.type.ColorType;
 
 import java.util.*;
 

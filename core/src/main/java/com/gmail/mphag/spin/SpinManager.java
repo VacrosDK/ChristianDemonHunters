@@ -1,8 +1,13 @@
-package com.gmail.mphag;
+package com.gmail.mphag.spin;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.gmail.mphag.*;
+import com.gmail.mphag.board.BoardManager;
+import com.gmail.mphag.managers.ActionManager;
+import com.gmail.mphag.managers.PlayerManager;
+import com.gmail.mphag.type.GameState;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +40,7 @@ public class SpinManager {
     private SpinBox chosenSpinBox;
     private boolean shouldHide = false;
     private boolean spinTotallyDone = false;
+    private SpinBox lastSpinBox;
 
     public SpinManager(PlayerManager playerManager, BoardManager boardManager, ActionManager actionManager) {
         this.playerManager = playerManager;
@@ -48,7 +54,7 @@ public class SpinManager {
     private void resetVariables() {
         this.spinSpeed = 3000;
         this.spinTime = 2000;
-        this.spinEndPause = 2000;
+        this.spinEndPause = 1300;
         this.spinSpeedDecrement = 1000;
 
     }
@@ -150,7 +156,19 @@ public class SpinManager {
 
         int i = random.nextInt(0, values.size());
 
-        spinBoxes.add(new SpinBox(values.get(i), boxHeight/2, boxWidth, boxHeight));
+        if(lastSpinBox != null && lastSpinBox.getType() == values.get(i)) {
+            if(i == values.size() - 1) {
+                i = 0;
+            } else {
+                i++;
+            }
+        }
+
+        SpinBox spinBox = new SpinBox(values.get(i), boxHeight / 2, boxWidth, boxHeight);
+
+        lastSpinBox = spinBox;
+
+        spinBoxes.add(spinBox);
     }
 
     private void updateSpinPool(List<SpinType> values) {
@@ -166,13 +184,14 @@ public class SpinManager {
             values.remove(SpinType.ADD_DEMON);
         }
 
-        if(!boardManager.hasAngelsOfPlayer(playerManager.getCurrentPlayer())) {
+        if(!boardManager.hasAngelsOfPlayer(playerManager.getCurrentPlayer()) || !boardManager.hasAnyDemonsOnBoard()) {
             values.remove(SpinType.SHOOT_WITH_ANGEL);
         }
 
         if(!boardManager.hasAngelsOfPlayer(playerManager.getPlayerNotAtTurn())) {
             values.remove(SpinType.REMOVE_ANGEL);
         }
+
     }
 
     public void draw(SpriteBatch batch) {

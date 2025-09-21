@@ -1,4 +1,4 @@
-package com.gmail.mphag;
+package com.gmail.mphag.question;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.gmail.mphag.Settings;
+import com.gmail.mphag.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

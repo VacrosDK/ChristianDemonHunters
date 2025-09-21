@@ -7,6 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.gmail.mphag.board.BoardManager;
+import com.gmail.mphag.managers.ActionManager;
+import com.gmail.mphag.managers.PlayerManager;
+import com.gmail.mphag.question.QuestionManager;
+import com.gmail.mphag.spin.SpinManager;
+import com.gmail.mphag.type.ColorType;
+import com.gmail.mphag.type.GameState;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Core extends ApplicationAdapter {

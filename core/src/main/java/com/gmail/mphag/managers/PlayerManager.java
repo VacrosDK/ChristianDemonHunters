@@ -1,6 +1,11 @@
-package com.gmail.mphag;
+package com.gmail.mphag.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.gmail.mphag.Core;
+import com.gmail.mphag.Player;
+import com.gmail.mphag.Settings;
+import com.gmail.mphag.Utils;
+import com.gmail.mphag.type.GameState;
 
 public class PlayerManager {
 

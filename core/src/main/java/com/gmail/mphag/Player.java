@@ -2,6 +2,7 @@ package com.gmail.mphag;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.gmail.mphag.spin.SpinType;
 
 public class Player {
 

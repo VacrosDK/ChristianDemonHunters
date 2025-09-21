@@ -1,9 +1,11 @@
-package com.gmail.mphag;
+package com.gmail.mphag.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.GridPoint2;
+import com.gmail.mphag.Player;
+import com.gmail.mphag.Settings;
 
 public class BoardTile {
 

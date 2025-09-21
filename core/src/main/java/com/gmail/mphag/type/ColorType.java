@@ -1,4 +1,4 @@
-package com.gmail.mphag;
+package com.gmail.mphag.type;
 
 import com.badlogic.gdx.graphics.Color;
 
